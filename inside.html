@@ -18,190 +18,201 @@
   <link rel="apple-touch-icon" sizes="180x180" href="assets/logo/palmis-apple-180.png">
   <meta name="theme-color" content="#000000">
 
-  <!-- Page-specific styles -->
-  <style>
-    html, body {
-      height: 100%;
-      margin: 0;
-      overflow-x: hidden;
-    }
+ <style>
+  html, body {
+    height: 100%;
+    margin: 0;
+    overflow-x: hidden;
+  }
 
-    body.inside-page {
-      display: flex;
-      flex-direction: column;
-      background: #000;
-    }
+  /* body for this page = full-height column */
+  body.inside-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: #000;
+  }
 
-    main.inside-main {
-      flex: 1;
-      min-height: 0;
-      padding: 20px 16px 40px;
-      background: #000;
-    }
+  /* main area must stretch between header and footer */
+  main.inside-main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    background: #000;
+  }
 
-    /* --- Virtual Tour layout --- */
+  /* Virtual tour wrapper */
+  .vt-container{
+    flex: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 16px 16px 24px;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .vt-title{
+    text-align:center;
+    font-size:2rem;
+    margin:10px 0 4px;
+  }
+
+  .vt-subtitle{
+    text-align:center;
+    opacity:.8;
+    margin:0 0 16px;
+    font-size:.95rem;
+  }
+
+  /* Tabs */
+  .vt-tabs{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:8px;
+    margin-bottom:16px;
+  }
+
+  .vt-tab{
+    border:none;
+    padding:6px 14px;
+    border-radius:999px;
+    font-size:.85rem;
+    cursor:pointer;
+    background:rgba(255,255,255,0.05);
+    color:#fff;
+    border:1px solid rgba(255,255,255,0.15);
+  }
+
+  .vt-tab.active{
+    background:linear-gradient(90deg,var(--brand,#FCA384),var(--accent,#A93528));
+    border-color:transparent;
+  }
+
+  /* Panels area fills the rest of the height */
+  .vt-panels{
+    flex: 1;
+    background:#000;
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:0 14px 28px rgba(0,0,0,.55);
+    display:flex;
+  }
+
+  .vt-panel{
+    flex: 1;
+    position:relative;
+    display:none;
+  }
+
+  .vt-panel.active{
+    display:block;
+  }
+
+  /* 360 viewer uses all available height */
+  .vt-360-wrap a-scene{
+    width:100%;
+    height:100%;
+  }
+
+  .vt-hint{
+    text-align:center;
+    font-size:.85rem;
+    opacity:.8;
+    padding:8px 12px 0;
+  }
+
+  /* Angle images fill the same area as the 360 */
+  .vt-img-wrap{
+    position:relative;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    background:#000;
+  }
+
+  .vt-img-wrap img{
+    width:100%;
+    height:100%;
+    object-fit:cover;   /* big, immersive */
+    display:block;
+  }
+
+  /* Clickable zones on images */
+  .table-hotspot{
+    position:absolute;
+    width:7%;
+    height:9%;
+    transform:translate(-50%,-50%);
+    border-radius:8px;
+    background:rgba(255,255,255,0.15); /* make transparent when finished */
+    border:1px dashed rgba(255,255,255,0.6);
+    cursor:pointer;
+  }
+
+  .table-hotspot:hover{
+    background:rgba(255,255,255,0.30);
+  }
+
+  /* A-frame view buttons (inside 360 panel only) */
+  .view-controls{
+    position:absolute;
+    left:50%;
+    bottom:12px;
+    transform:translateX(-50%);
+    display:flex;
+    gap:6px;
+    background:rgba(0,0,0,0.45);
+    padding:6px 10px;
+    border-radius:999px;
+    z-index:20;
+    backdrop-filter:blur(6px);
+  }
+
+  .view-controls button{
+    border:none;
+    padding:4px 8px;
+    border-radius:999px;
+    font-size:0.75rem;
+    cursor:pointer;
+    background:rgba(255,255,255,0.9);
+  }
+
+  .view-controls button:active{
+    transform:scale(0.97);
+  }
+
+  /* small tip overlay */
+  #fullview-tip {
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 8px 14px;
+    background: rgba(0,0,0,0.55);
+    color: white;
+    font-size: 0.9rem;
+    border-radius: 6px;
+    z-index: 50;
+    pointer-events: none;
+    animation: fadeout 5s forwards;
+  }
+
+  @keyframes fadeout {
+    0% { opacity: 1; }
+    75% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+
+  @media (max-width:768px){
     .vt-container{
-      max-width: 1200px;
-      margin: 0 auto;
-      color: #fff;
+      padding: 12px 8px 18px;
     }
+  }
+</style>
 
-    .vt-title{
-      text-align:center;
-      font-size:2rem;
-      margin:10px 0 4px;
-    }
-
-    .vt-subtitle{
-      text-align:center;
-      opacity:.8;
-      margin:0 0 16px;
-      font-size:.95rem;
-    }
-
-    /* Tabs */
-    .vt-tabs{
-      display:flex;
-      flex-wrap:wrap;
-      justify-content:center;
-      gap:8px;
-      margin-bottom:16px;
-    }
-
-    .vt-tab{
-      border:none;
-      padding:6px 14px;
-      border-radius:999px;
-      font-size:.85rem;
-      cursor:pointer;
-      background:rgba(255,255,255,0.05);
-      color:#fff;
-      border:1px solid rgba(255,255,255,0.15);
-    }
-
-    .vt-tab.active{
-      background:linear-gradient(90deg,var(--brand,#FCA384),var(--accent,#A93528));
-      border-color:transparent;
-    }
-
-    /* Panels */
-    .vt-panels{
-      background:#000;
-      border-radius:18px;
-      overflow:hidden;
-      box-shadow:0 14px 28px rgba(0,0,0,.55);
-    }
-
-    .vt-panel{
-      display:none;
-      position:relative;
-    }
-
-    .vt-panel.active{
-      display:block;
-    }
-
-    /* 360 viewer */
-    .vt-360-wrap a-scene{
-      width:100%;
-      height:420px;
-    }
-
-    .vt-hint{
-      text-align:center;
-      font-size:.85rem;
-      opacity:.8;
-      padding:8px 12px 14px;
-    }
-
-    /* Angle images */
-    .vt-img-wrap{
-      position:relative;
-      width:100%;
-      overflow:hidden;
-      background:#000;
-    }
-
-    .vt-img-wrap img{
-      width:100%;
-      display:block;
-    }
-
-    /* Clickable zones on images */
-    .table-hotspot{
-      position:absolute;
-      width:7%;
-      height:9%;
-      transform:translate(-50%,-50%);
-      border-radius:8px;
-      background:rgba(255,255,255,0.15); /* make transparent when finished */
-      border:1px dashed rgba(255,255,255,0.6);
-      cursor:pointer;
-    }
-
-    .table-hotspot:hover{
-      background:rgba(255,255,255,0.30);
-    }
-
-    /* A-frame view buttons (inside 360 panel only) */
-    .view-controls{
-      position:absolute;
-      left:50%;
-      bottom:12px;
-      transform:translateX(-50%);
-      display:flex;
-      gap:6px;
-      background:rgba(0,0,0,0.45);
-      padding:6px 10px;
-      border-radius:999px;
-      z-index:20;
-      backdrop-filter:blur(6px);
-    }
-
-    .view-controls button{
-      border:none;
-      padding:4px 8px;
-      border-radius:999px;
-      font-size:0.75rem;
-      cursor:pointer;
-      background:rgba(255,255,255,0.9);
-    }
-
-    .view-controls button:active{
-      transform:scale(0.97);
-    }
-
-    /* small tip overlay */
-    #fullview-tip {
-      position: absolute;
-      top: 12px;
-      left: 50%;
-      transform: translateX(-50%);
-      padding: 8px 14px;
-      background: rgba(0,0,0,0.55);
-      color: white;
-      font-size: 0.9rem;
-      border-radius: 6px;
-      z-index: 50;
-      pointer-events: none;
-      animation: fadeout 5s forwards;
-    }
-
-    @keyframes fadeout {
-      0% { opacity: 1; }
-      75% { opacity: 1; }
-      100% { opacity: 0; }
-    }
-
-    @media (max-width:768px){
-      main.inside-main{
-        padding:16px 8px 32px;
-      }
-      .vt-360-wrap a-scene{
-        height:320px;
-      }
-    }
-  </style>
 </head>
 
 <body class="inside-page">
