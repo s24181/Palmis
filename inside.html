@@ -128,17 +128,17 @@
       border-color: transparent;
     }
 
-    /* clickable rectangles on angle images */
-    .table-hotspot {
-      position: absolute;
-      width: 7%;
-      height: 9%;
-      transform: translate(-50%, -50%);
-      border-radius: 8px;
-      background: rgba(255,255,255,0.15); /* set to 0 when you’re happy */
-      border: 1px dashed rgba(255,255,255,0.6);
-      cursor: pointer;
-    }
+   .table-hotspot{
+  position: absolute;
+  width: 7%;
+  height: 9%;
+  transform: translate(-50%, -50%);
+  border-radius: 8px;
+  background: transparent;   /* 🔹 fully invisible */
+  border: none;              /* 🔹 no dashed outline */
+  cursor: pointer;
+}
+
 
     .table-hotspot:hover {
       background: rgba(255,255,255,0.30);
@@ -253,9 +253,10 @@
         <div class="vt-img-wrap">
           <img src="assets/angles/angle-1-tables-1-2-6.png"
                alt="Restaurant view with tables 1, 2 and 6">
-          <button class="table-hotspot" data-table="1" style="top:60%; left:40%;"></button>
-          <button class="table-hotspot" data-table="2" style="top:60%; left:63%;"></button>
-          <button class="table-hotspot" data-table="6" style="top:58%; left:88%;"></button>
+          <button class="table-hotspot" data-table="1" style="top:68%; left:23%;"></button>
+<button class="table-hotspot" data-table="2" style="top:68%; left:51%;"></button>
+<button class="table-hotspot" data-table="6" style="top:67%; left:80%;"></button>
+
         </div>
       </div>
 
