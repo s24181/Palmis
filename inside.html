@@ -140,17 +140,21 @@
       border-color: transparent;
     }
 
-    /* Clickable zones on angle images */
-    .table-hotspot {
-      position: absolute;
-      width: 7%;
-      height: 9%;
-      transform: translate(-50%, -50%);
-      border-radius: 8px;
-      background: rgba(255,255,255,0.15); /* set to 0 when done */
-      border: 1px dashed rgba(255,255,255,0.6);
-      cursor: pointer;
-    }
+   /* Clickable zones on angle images */
+.table-hotspot {
+  position: absolute;
+  width: 7%;
+  height: 9%;
+  border-radius: 8px;
+  cursor: pointer;
+
+  /* IMPORTANT: no centering, top/left are now simple */
+  transform: none;
+
+  /* keep visible while adjusting */
+  background: rgba(255,255,255,0.2);
+  border: 1px dashed rgba(255,255,255,0.8);
+}
 
     .table-hotspot:hover {
       background: rgba(255,255,255,0.30);
@@ -274,10 +278,10 @@
          <div class="vt-img-wrap">
     <img src="assets/angles/angle-1-tables-1-2-6.png" alt="Angle 1">
 
-    <!-- Hotspots -->
-    <button class="table-hotspot" style="top: 72%; left: 25%;" data-seat="1"></button>
-    <button class="table-hotspot" style="top: 84%; left: 53%;" data-seat="2"></button>
-    <button class="table-hotspot" style="top: 70%; left: 72%;" data-seat="6"></button>
+    <button class="table-hotspot" style="top: 72%; left: 25%;" data-table="1"></button>
+<button class="table-hotspot" style="top: 84%; left: 53%;" data-table="2"></button>
+<button class="table-hotspot" style="top: 70%; left: 72%;" data-table="6"></button>
+
 </div>
 
 
