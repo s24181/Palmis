@@ -591,17 +591,17 @@
         <p class="reserve-sub">Window seats, central tables and cosy corners — choose the table that suits you best.</p>
 
         <div class="table-grid" id="tableGrid">
-          <button class="table-btn" data-table="1" data-pos="Window">
-            <span class="table-num">1</span>
+          <button class="table-btn" data-table="6" data-pos="Window">
+            <span class="table-num">6</span>
             <span class="table-pos">Window · 2 seats</span>
           </button>
           <button class="table-btn" data-table="2" data-pos="Window">
             <span class="table-num">2</span>
             <span class="table-pos">Window · 4 seats</span>
           </button>
-          <button class="table-btn" data-table="3" data-pos="Central">
-            <span class="table-num">3</span>
-            <span class="table-pos">Central · 2 seats</span>
+          <button class="table-btn" data-table="1" data-pos="Central">
+            <span class="table-num">1</span>
+            <span class="table-pos">Central · 4 seats</span>
           </button>
           <button class="table-btn" data-table="4" data-pos="Central">
             <span class="table-num">4</span>
@@ -611,17 +611,17 @@
             <span class="table-num">5</span>
             <span class="table-pos">Window · 2 seats</span>
           </button>
-          <button class="table-btn is-disabled" disabled data-table="6" data-pos="Central">
-            <span class="table-num">6</span>
+          <button class="table-btn is-disabled" disabled data-table="17" data-pos="Central">
+            <span class="table-num">17</span>
             <span class="table-pos">Reserved</span>
           </button>
-          <button class="table-btn" data-table="7" data-pos="Central">
-            <span class="table-num">7</span>
+          <button class="table-btn" data-table="5" data-pos="Central">
+            <span class="table-num">5</span>
             <span class="table-pos">Central · 2 seats</span>
           </button>
-          <button class="table-btn" data-table="8" data-pos="Corner">
-            <span class="table-num">8</span>
-            <span class="table-pos">Corner · 2 seats</span>
+          <button class="table-btn" data-table="21" data-pos="Corner">
+            <span class="table-num">21</span>
+            <span class="table-pos">Corner · 4 seats</span>
           </button>
         </div>
 
@@ -712,6 +712,10 @@
     </section>
 
   </div>
+<p id="reserve-selected-table">Selected table: <strong>none yet</strong></p>
+
+<input type="hidden" name="table" id="table-input">
+
 </main>
 
 <footer class="footer">
@@ -933,6 +937,22 @@
       toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
     });
   })();
+</script>
+
+<script>
+(function() {
+  // Read ?table=XX from the URL
+  const params = new URLSearchParams(window.location.search);
+  const table = params.get('table');
+
+  const tableText = document.getElementById('reserve-selected-table');
+  const tableInput = document.getElementById('table-input');
+
+  if (table && tableText && tableInput) {
+    tableText.innerHTML = 'Selected table: <strong>' + table + '</strong>';
+    tableInput.value = table;
+  }
+})();
 </script>
 
 </body>
