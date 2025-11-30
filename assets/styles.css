@@ -1456,3 +1456,32 @@ max-width: 100%;       /* smaller padding on phones */
     margin-left: auto;        /* stays on the right but inside width */
   }
 }
+
+/* Wrapper that locks hotspots to the image */
+.vt-img-wrap {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 70px); /* full height under header */
+  overflow: hidden;
+}
+
+/* The image must not stretch unpredictably */
+.vt-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;   /* THIS is what stabilizes hotspot positions */
+  display: block;
+}
+
+/* Invisible hotspot */
+.table-hotspot {
+  position: absolute;
+  width: 7%;           /* adjust size */
+  height: 10%;
+  transform: translate(-50%, -50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  /* border: 1px dashed #fff4;  <-- for debugging only */
+}
+
