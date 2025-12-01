@@ -1457,9 +1457,9 @@ max-width: 100%;       /* smaller padding on phones */
   }
 }
 
-/* === VIRTUAL TOUR IMAGE LAYOUT (ANGLES) === */
+/* === VIRTUAL TOUR IMAGE LAYOUT (ANGLES) – FINAL === */
 
-/* Viewer area under the header */
+/* Viewer area for the Gemini angles (behind the image) */
 .vt-viewer {
   position: relative;
   width: 100%;
@@ -1467,27 +1467,34 @@ max-width: 100%;       /* smaller padding on phones */
   overflow: hidden;
 }
 
-/* Image wrapper – follows the image’s natural height */
+/* Wrapper that centers the pano */
 .vt-img-wrap {
   position: relative;
   width: 100%;
+  height: calc(100vh - 70px - 60px); /* header + footer space */
   max-width: 100%;
   margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }
 
-/* Image: always show the full photo, no crop */
+/* Image: fill width, keep full image, no left shift */
 .vt-img-wrap img {
   display: block;
-  width: 100%;
-  height: auto;              /* 🔑 keeps full image on mobile */
+  width: 100%;       /* no black strip on the right */
+  height: auto;      /* keep proportions */
+  object-fit: contain;
+  object-position: center;
 }
 
 /* Clickable table zones (percentages based on the image box) */
 .table-hotspot {
   position: absolute;
-  width: 7%;                 /* adjust if you want bigger/smaller */
+  width: 7%;
   height: 9%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%); /* center of card */
   cursor: pointer;
 
   /* keep visible while you fine-tune */
@@ -1495,36 +1502,10 @@ max-width: 100%;       /* smaller padding on phones */
   border: 1px dashed rgba(255, 255, 255, 0.9);
 }
 
-/* Optional: hide hotspot boxes on desktop once you're happy */
+/* Hide hotspot outlines on desktop once positions are OK */
 @media (min-width: 769px) {
   .table-hotspot {
     background: transparent;
     border: none;
   }
 }
-/* === FIX: Proper centering for all Gemini angle images === */
-
-.vt-img-wrap {
-  position: relative;
-  width: 100%;
-  height: calc(100vh - 70px - 60px); /* same viewer height */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-}
-
-.vt-img-wrap img {
-  height: 100%;
-  width: auto;
-  object-fit: contain;      /* show whole image */
-  object-position: center;  /* center horizontally */
-  display: block;
-}
-
-/* === Fix hotspots so they stay aligned even with object-fit:contain === */
-.table-hotspot {
-  position: absolute;
-  transform: translate(-50%, -50%); /* anchor centered */
-}
-
