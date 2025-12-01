@@ -331,14 +331,23 @@
         </div>
 
         <!-- ANGLE 4 -->
-        <div class="vt-panel" id="view-angle4">
-          <div class="vt-img-wrap">
-            <img src="assets/angles/angle-4-tables-21-22.png"
-                 alt="Restaurant view with tables 21 and 22">
-            <button class="table-hotspot" data-table="21" style="top:72%; left:44%;"></button>
-            <button class="table-hotspot" data-table="22" style="top:62%; left:73%;"></button>
-          </div>
-        </div>
+<div class="vt-panel" id="view-angle4">
+  <div class="vt-img-wrap">
+    <img src="assets/angles/angle-4-tables-21-22.png"
+         alt="Restaurant view with tables 21 and 22">
+
+    <!-- instead of style="top:...; left:..." -->
+    <button class="table-hotspot"
+            data-table="21"
+            data-x="600"
+            data-y="560"></button>
+
+    <button class="table-hotspot"
+            data-table="22"
+            data-x="1350"
+            data-y="560"></button>
+  </div>
+</div>
 
       </div><!-- /.vt-panels -->
 
@@ -463,6 +472,46 @@
     }
   });
 </script>
+
+<script>
+  function positionAllHotspots() {
+    document.querySelectorAll('.vt-img-wrap').forEach(wrap => {
+      const img = wrap.querySelector('img');
+      if (!img || !img.complete) return;
+
+      const imgRect = img.getBoundingClientRect();
+      const wrapRect = wrap.getBoundingClientRect();
+
+      const displayW = imgRect.width;
+      const displayH = imgRect.height;
+
+      const offsetX = imgRect.left - wrapRect.left;
+      const offsetY = imgRect.top - wrapRect.top;
+
+      const naturalW = img.naturalWidth;
+      const naturalH = img.naturalHeight;
+
+      wrap.querySelectorAll('.table-hotspot').forEach(h => {
+        const x = parseFloat(h.dataset.x); // original pixels
+        const y = parseFloat(h.dataset.y);
+
+        if (isNaN(x) || isNaN(y) || !naturalW || !naturalH) return;
+
+        const left = offsetX + (x / naturalW) * displayW;
+        const top  = offsetY + (y / naturalH) * displayH;
+
+        h.style.left = left + 'px';
+        h.style.top  = top  + 'px';
+      });
+    });
+  }
+
+  window.addEventListener('load', function () {
+    positionAllHotspots();
+    window.addEventListener('resize', positionAllHotspots);
+  });
+</script>
+
 
 </body>
 </html>
