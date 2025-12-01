@@ -1457,9 +1457,9 @@ max-width: 100%;       /* smaller padding on phones */
   }
 }
 
-/* === VIRTUAL TOUR IMAGE LAYOUT (ANGLES) – FINAL === */
+/* === VIRTUAL TOUR IMAGE LAYOUT (ANGLES) – CLEAN VERSION === */
 
-/* Viewer area for the Gemini angles (behind the image) */
+/* viewer container – same for all panels */
 .vt-viewer {
   position: relative;
   width: 100%;
@@ -1467,81 +1467,38 @@ max-width: 100%;       /* smaller padding on phones */
   overflow: hidden;
 }
 
-/* Wrapper that centers the pano */
-.vt-img-wrap {
+/* ONLY for the flat Gemini angle images, not the 360 scene */
+.vt-panel:not(#view-360) .vt-img-wrap {
   position: relative;
   width: 100%;
-  height: calc(100vh - 70px - 60px); /* header + footer space */
   max-width: 100%;
   margin: 0 auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
 }
 
-/* Image: fill width, keep full image, no left shift */
-.vt-img-wrap img {
+/* Image fills the width, so no black bar on the sides */
+.vt-panel:not(#view-360) .vt-img-wrap img {
   display: block;
-  width: 100%;       /* no black strip on the right */
-  height: auto;      /* keep proportions */
-  object-fit: contain;
-  object-position: center;
+  width: 100%;     /* 🔑 full width, no side gaps */
+  height: auto;
 }
 
-/* Clickable table zones (percentages based on the image box) */
-.table-hotspot {
+/* Hotspots are percent-based over that image box */
+.vt-panel:not(#view-360) .table-hotspot {
   position: absolute;
   width: 7%;
   height: 9%;
-  transform: translate(-50%, -50%); /* center of card */
+  transform: translate(-50%, -50%);
   cursor: pointer;
 
-  /* keep visible while you fine-tune */
-  background: rgba(255, 255, 255, 0.25);
-  border: 1px dashed rgba(255, 255, 255, 0.9);
+  /* keep visible while adjusting */
+  background: rgba(255,255,255,0.25);
+  border: 1px dashed rgba(255,255,255,0.9);
 }
 
-/* Hide hotspot outlines on desktop once positions are OK */
+/* Optional: hide hotspot boxes on desktop once you're happy */
 @media (min-width: 769px) {
-  .table-hotspot {
+  .vt-panel:not(#view-360) .table-hotspot {
     background: transparent;
     border: none;
   }
-}
-/* === FINAL OVERRIDE: center Gemini angle panoramas === */
-.vt-viewer {
-  position: relative;
-  width: 100vw;
-  max-width: 100vw;
-  background: #000;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;   /* center the image block */
-}
-
-.vt-img-wrap {
-  position: relative;
-  height: calc(100vh - 70px - 60px); /* viewer height */
-  width: auto;
-  max-width: 100vw;
-  margin: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;   /* horizontal centering */
-  overflow: hidden;
-}
-
-.vt-img-wrap img {
-  height: 100%;
-  width: auto;
-  display: block;
-  object-fit: contain;       /* keep full image */
-  object-position: center;   /* no “slightly left” */
-}
-
-/* keep hotspot sizes + centering on cards */
-.table-hotspot {
-  position: absolute;
-  transform: translate(-50%, -50%);
 }
