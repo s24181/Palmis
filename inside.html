@@ -18,8 +18,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="assets/logo/palmis-apple-180.png">
   <meta name="theme-color" content="#000000">
 
-  <!-- Page-specific styles for INSIDE only -->
-    <!-- Page-specific styles -->
+   <!-- Page-specific styles JUST for the Virtual Tour page -->
   <style>
     html, body {
       height: 100%;
@@ -48,17 +47,21 @@
       width: 100%;
     }
 
+    /* Viewer: let the content decide the height (no forced 100vh) */
     .vt-viewer {
       position: relative;
       width: 100%;
       background: #000;
       overflow: hidden;
+      height: auto;      /* 🔑 override global CSS */
+      min-height: 0;
     }
 
     /* Panels container */
     .vt-panels {
       position: relative;
       width: 100%;
+      height: auto;      /* follow content */
     }
 
     .vt-panel {
@@ -81,21 +84,25 @@
       height: 100%;
     }
 
-    /* === ANGLE IMAGES (Gemini) – auto height, full width, no black gap === */
+    /* === ANGLE IMAGES (Gemini) – full-width image, NO black gap === */
+
+    /* Wrapper follows the image height */
     .vt-panel:not(#view-360) .vt-img-wrap {
       position: relative;
       width: 100%;
       max-width: 100%;
       margin: 0 auto;
+      overflow: visible;
     }
 
+    /* Image: fills width, keeps aspect ratio, no crop, no side bar */
     .vt-panel:not(#view-360) .vt-img-wrap img {
       display: block;
-      width: 100%;   /* 🔑 fills width, no side bar */
-      height: auto;  /* keep full image, no crop */
+      width: 100%;      /* fills horizontally */
+      height: auto;     /* image decides height */
     }
 
-    /* Hotspots sit on top of that image box */
+    /* Hotspots sit on top of the image box */
     .vt-panel:not(#view-360) .table-hotspot {
       position: absolute;
       width: 7%;
@@ -180,6 +187,7 @@
       }
     }
   </style>
+
 
 </head>
 
