@@ -18,11 +18,12 @@
   <link rel="apple-touch-icon" sizes="180x180" href="assets/logo/palmis-apple-180.png">
   <meta name="theme-color" content="#000000">
 
-   <!-- Page-specific styles JUST for the Virtual Tour page -->
+  <!-- Page-specific styles JUST for the Virtual Tour page -->
   <style>
     html, body {
-      height: 100%;
       margin: 0;
+      padding: 0;
+      height: 100%;
       overflow-x: hidden;
     }
 
@@ -47,28 +48,25 @@
       width: 100%;
     }
 
-    /* Viewer: let the content decide the height (no forced 100vh) */
     .vt-viewer {
       position: relative;
       width: 100%;
       background: #000;
       overflow: hidden;
-      height: auto;      /* 🔑 override global CSS */
+      height: auto;
       min-height: 0;
     }
 
-    /* Panels container */
     .vt-panels {
       position: relative;
       width: 100%;
-      height: auto;      /* follow content */
+      height: auto;
     }
 
     .vt-panel {
       display: none;
       width: 100%;
     }
-
     .vt-panel.active {
       display: block;
     }
@@ -78,31 +76,29 @@
       width: 100%;
       height: calc(100vh - 70px - 60px); /* header + footer approx */
     }
-
     #view-360 .vt-360-wrap a-scene {
       width: 100%;
       height: 100%;
     }
 
-    /* === ANGLE IMAGES (Gemini) – full-width image, NO black gap === */
-
-    /* Wrapper follows the image height */
+    /* === ANGLE IMAGES (Gemini) – full width, no right black bar === */
     .vt-panel:not(#view-360) .vt-img-wrap {
       position: relative;
       width: 100%;
       max-width: 100%;
       margin: 0 auto;
       overflow: visible;
+      height: auto !important;
+      display: block !important;
     }
 
-    /* Image: fills width, keeps aspect ratio, no crop, no side bar */
     .vt-panel:not(#view-360) .vt-img-wrap img {
       display: block;
-      width: 100%;      /* fills horizontally */
-      height: auto;     /* image decides height */
+      width: 100% !important;  /* fill width */
+      height: auto !important; /* keep aspect ratio */
     }
 
-    /* Hotspots sit on top of the image box */
+    /* Hotspots on top of image */
     .vt-panel:not(#view-360) .table-hotspot {
       position: absolute;
       width: 7%;
@@ -111,7 +107,7 @@
       border-radius: 8px;
       cursor: pointer;
 
-      /* visible while tuning positions */
+      /* visible while tuning */
       background: rgba(255, 255, 255, 0.25);
       border: 1px dashed rgba(255, 255, 255, 0.9);
     }
@@ -187,8 +183,6 @@
       }
     }
   </style>
-
-
 </head>
 
 <body class="inside-page">
@@ -240,49 +234,47 @@
       <!-- 360 + angle panels -->
       <div class="vt-panels">
 
-<!-- 360° PANEL -->
-<div class="vt-panel active" id="view-360">
-  <div class="vt-360-wrap">
-    <a-scene
-      embedded
-      cursor="rayOrigin: mouse"
-      raycaster="objects: .clickable">
+        <!-- 360° PANEL -->
+        <div class="vt-panel active" id="view-360">
+          <div class="vt-360-wrap">
+            <a-scene
+              embedded
+              cursor="rayOrigin: mouse"
+              raycaster="objects: .clickable">
 
-      <!-- Leonardo panorama -->
-      <a-sky src="assets/palmis-360.jpg" rotation="0 -90 0"></a-sky>
+              <!-- Leonardo panorama -->
+              <a-sky src="assets/palmis-360.jpg" rotation="0 -90 0"></a-sky>
 
-      <!-- Camera: NO POINTER LOCK -->
-      <a-entity id="mainCamera"
-                camera
-                look-controls="pointerLockEnabled: false"
-                position="0 1.6 0">
-      </a-entity>
+              <!-- Camera: NO POINTER LOCK -->
+              <a-entity id="mainCamera"
+                        camera
+                        look-controls="pointerLockEnabled: false"
+                        position="0 1.6 0">
+              </a-entity>
 
-      <!-- TABLE 5 HOTSPOT – bigger + always clickable -->
-      <a-entity id="table5-hotspot"
-                class="clickable"
-                geometry="primitive: plane; width: 1.3; height: 1.3"
-                material="opacity: 0; transparent: true; depthTest: false"
-                position="0 1.1 -3">
-      </a-entity>
+              <!-- TABLE 5 HOTSPOT – bigger -->
+              <a-entity id="table5-hotspot"
+                        class="clickable"
+                        geometry="primitive: plane; width: 1.3; height: 1.3"
+                        material="opacity: 0; transparent: true; depthTest: false"
+                        position="0 1.1 -3">
+              </a-entity>
 
-    </a-scene>
+            </a-scene>
 
-    <div id="fullview-tip">
-      Drag to look around. Click table 5 to reserve it.
-    </div>
-  </div>
-</div>
-
+            <div id="fullview-tip">
+              Drag to look around. Click table 5 to reserve it.
+            </div>
+          </div>
+        </div>
 
         <!-- ANGLE 1 -->
         <div class="vt-panel" id="view-angle1">
           <div class="vt-img-wrap">
             <img src="assets/angles/angle-1-tables-1-2-6.png" alt="Angle 1">
-
-            <button class="table-hotspot" style="top: 54%; left: 23%;" data-table="1"></button>
-            <button class="table-hotspot" style="top: 54%; left: 73%;" data-table="2"></button>
-            <button class="table-hotspot" style="top: 54%; left: 82%;" data-table="6"></button>
+            <button class="table-hotspot" style="top:54%; left:23%;" data-table="1"></button>
+            <button class="table-hotspot" style="top:54%; left:73%;" data-table="2"></button>
+            <button class="table-hotspot" style="top:54%; left:82%;" data-table="6"></button>
           </div>
         </div>
 
@@ -438,37 +430,6 @@
       });
     }
   });
-    @media (max-width: 768px) {
-      .vt-tabs {
-        bottom: 10px;
-        padding: 4px 8px;
-      }
-      .vt-tab {
-        font-size: 0.75rem;
-        padding: 4px 10px;
-      }
-    }
-
-    /* === OVERRIDE global vt-img-wrap rules from assets/styles.css === */
-    .vt-panel:not(#view-360) .vt-img-wrap {
-      height: auto !important;
-      display: block !important;
-      align-items: initial !important;
-      justify-content: initial !important;
-      overflow: visible !important;
-    }
-
-    .vt-panel:not(#view-360) .vt-img-wrap img {
-      width: 100% !important;
-      height: auto !important;
-    }
-
-    .vt-panel:not(#view-360) .table-hotspot {
-      background: rgba(255,255,255,0.25) !important;
-      border: 1px dashed rgba(255,255,255,0.9) !important;
-    }
-  </style>
-
 </script>
 
 </body>
