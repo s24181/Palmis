@@ -1502,4 +1502,29 @@ max-width: 100%;       /* smaller padding on phones */
     border: none;
   }
 }
+/* === FIX: Proper centering for all Gemini angle images === */
+
+.vt-img-wrap {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 70px - 60px); /* same viewer height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.vt-img-wrap img {
+  height: 100%;
+  width: auto;
+  object-fit: contain;      /* show whole image */
+  object-position: center;  /* center horizontally */
+  display: block;
+}
+
+/* === Fix hotspots so they stay aligned even with object-fit:contain === */
+.table-hotspot {
+  position: absolute;
+  transform: translate(-50%, -50%); /* anchor centered */
+}
 
